@@ -30,10 +30,11 @@ const Sidebar = () => {
     return (
         <aside className={`
             ${isSidebarOpen 
-                ? 'w-[150px] sm:w-[280px] bg-[#141718] border-[#242627]' 
+                ? 'w-[200px] sm:w-[280px] bg-[#141718] border-[#242627]' 
                 : 'w-[56px] bg-transparent sm:bg-[#141718] border-transparent sm:border-[#242627]'} 
             h-full min-h-0 p-[12px] sm:p-[20px] gap-[12px] sm:gap-[20px] flex flex-col 
-            transition-all duration-300 ease-in-out shrink-0 border-r overflow-hidden`}>
+            transition-all duration-300 ease-in-out shrink-0 border-r overflow-hidden
+            sm:static ${!isSidebarOpen ? 'w-[56px]' : ''}`}>
             
             <div className='flex justify-between items-center h-[30px]'>
                 <div className="overflow-hidden">
@@ -67,16 +68,16 @@ const Sidebar = () => {
                 className={`items-center gap-[10px] cursor-pointer p-[8px] sm:p-[10px] rounded-xl border border-[#2a2a2a] hover:bg-[#242627] transition-colors text-sm sm:text-base
                 ${isSidebarOpen ? 'flex' : 'hidden'}`}>
                 <img src={addround} className="w-[18px] sm:w-[20px] h-[18px] sm:h-[20px]" alt="addround" />
-                <span className='text-gray-300 text-xs sm:text-sm font-medium'>New Chat</span>
+                <span className='text-gray-300 text-sm sm:text-sm font-medium'>New Chat</span>
             </div>
 
             {/* Conversations List */}
             {isSidebarOpen && (
                 <div className="flex flex-col mt-2 gap-1 animate-in fade-in slide-in-from-left-2 duration-300 flex-1 overflow-y-auto">
-                    <span className="text-xs font-bold text-gray-100 mb-2 px-1">Conversations</span>
+                    <span className="text-sm font-bold text-gray-100 mb-2 px-1">Conversations</span>
                     
                     {conversations.length === 0 ? (
-                        <p className="text-xs text-gray-400 px-1">No conversations yet</p>
+                        <p className="text-sm text-gray-400 px-1">No conversations yet</p>
                     ) : (
                         conversations.map(conv => (
                             <div
@@ -92,7 +93,7 @@ const Sidebar = () => {
                                     <span className="shrink-0 flex items-center justify-center bg-gray-500/20 text-gray-300 rounded-full w-5 h-5 sm:w-6 sm:h-6">
                                         <img src="https://api.iconify.design/lucide:message-square.svg?color=%23d1d5db" alt="chat" className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                                     </span>
-                                    <span className="text-gray-200 text-[12px] sm:text-[13px] truncate font-medium">{conv.title}</span>
+                                    <span className="text-gray-200 text-[13px] sm:text-[13px] truncate font-medium">{conv.title}</span>
                                 </div>
                                 
                                 {currentConversationId === conv.id && (

@@ -47,8 +47,13 @@ function App() {
         onError={(error, info) => console.log(error, info)}
       >
         <ConversationProvider>
-          <div className="flex h-full w-full min-h-0 min-w-0">
-            <Sidebar />
+          <div className="relative flex sm:flex h-full w-full min-h-0 min-w-0">
+            <div className="sm:block hidden">
+              <Sidebar />
+            </div>
+            <div className="sm:hidden absolute top-0 left-0 h-full z-50">
+              <Sidebar />
+            </div>
            <div className="flex-1 min-w-0 min-h-0 h-full flex justify-center items-center overflow-hidden">
               <ChatWindow />
               </div>
