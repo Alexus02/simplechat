@@ -136,6 +136,12 @@ const ChatWindow = () => {
                 ref={scrollRef}
                 className="flex-1 min-h-0 overflow-y-auto flex flex-col p-3 sm:p-4 md:p-6 gap-3 sm:gap-5"
             >
+                {messages.length === 0 && !isLoading && (
+                    <div className="flex-1 flex items-center justify-center text-center px-4">
+                        <p className="text-gray-400 text-sm sm:text-base">hi what do you want to do today</p>
+                    </div>
+                )}
+
                 {messages.map((msg, index) => (
                     <div
                         key={index}
@@ -175,7 +181,7 @@ const ChatWindow = () => {
 
             {/* Input Area — flex-shrink-0 keeps it pinned at the bottom always */}
             <div
-                className="flex items-center min-w-0 gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3 border border-gray-700 rounded-xl sm:rounded-2xl focus-within:border-indigo-500 transition-all shadow-inner flex-shrink-0"
+                className="flex items-center min-w-0 gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3 border border-gray-700 rounded-xl sm:rounded-2xl focus-within:border-gray-500 transition-colors shadow-none flex-shrink-0"
                 style={{ backgroundColor: 'var(--color-input-bg)' }}
             >
                 <input
