@@ -20,7 +20,7 @@ function App() {
 
   if (isLoading) {
     return (
-      <main className='w-full h-screen overflow-hidden bg-cover bg-center bg-gray-darker flex items-center justify-center' style={{ backgroundImage: `url(${hero})` }}>
+      <main className='w-full fixed h-screen overflow-hidden bg-cover bg-center bg-gray-darker flex items-center justify-center' style={{ backgroundImage: `url(${hero})` }}>
         <div className="flex flex-col items-center justify-center gap-4">
           <img src={simpleChatlogo} alt="SimpleChat Logo" className="w-32 h-auto animate-pulse" />
           <p className="text-gray-400 text-sm font-medium">Loading...</p>
