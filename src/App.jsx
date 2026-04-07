@@ -51,9 +51,12 @@ function App() {
         }
       >
         <ConversationProvider>
+         <div className="flex flex-1 min-h-0 min-w-0 overflow-hidden">
           <Sidebar />
           <ChatWindow />
+          </div>
         </ConversationProvider>
+        
       </ErrorBoundary>
 
     </main>

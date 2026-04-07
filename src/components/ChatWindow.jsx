@@ -136,13 +136,10 @@ const ChatWindow = () => {
     };
 
     return (
-        <div className="flex flex-col flex-1 sm:flex-none h-full sm:w-[95%] md:w-[80%] lg:w-[70%] sm:h-full sm:mt-[40px] sm:mx-auto sm:min-h-[500px] sm:h-[85vh] box-border sm:rounded-[20px] shadow-2xl border border-gray-800" style={{ backgroundColor: 'var(--color-chat-bg)' }}>
+        <div className="flex flex-col flex-1 min-h-0 min-w-0 w-full sm:w-[95%] md:w-[80%] lg:w-[70%] sm:mt-[40px] sm:mx-auto sm:rounded-[20px] shadow-2xl border border-gray-800 overflow-hidden" style={{ backgroundColor: 'var(--color-chat-bg)' }}>
 
             {/* Messages Area */}
-            <div
-                ref={scrollRef}
-                className="flex-1 overflow-y-auto flex flex-col p-3 sm:p-4 md:p-6 gap-3 sm:gap-5 scroll-smooth scrollbar-hide"
-            >
+           <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto flex flex-col p-3 sm:p-4 md:p-6 gap-3 sm:gap-5 scroll-smooth scrollbar-hide">
                 {messages.map((msg, index) => (
                     <div
                         key={index}
