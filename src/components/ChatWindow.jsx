@@ -136,7 +136,7 @@ const ChatWindow = () => {
     };
 
     return (
-        <div className="flex flex-col justify-between flex-1 sm:flex-none h-screen sm:w-[95%] md:w-[80%] lg:w-[70%] sm:h-auto sm:mt-[40px] sm:mx-auto sm:min-h-[500px] sm:h-[85vh] box-border sm:rounded-[20px] p-3 sm:p-4 md:p-6 shadow-2xl border border-gray-800" style={{ backgroundColor: 'var(--color-chat-bg)' }}>
+        <div className="flex flex-col justify-between flex-1 sm:flex-none h-full sm:w-[95%] md:w-[80%] lg:w-[70%] sm:h-auto sm:mt-[40px] sm:mx-auto sm:min-h-[500px] sm:h-[85vh] box-border sm:rounded-[20px] p-3 sm:p-4 md:p-6 shadow-2xl border border-gray-800" style={{ backgroundColor: 'var(--color-chat-bg)' }}>
 
             {/* Messages Area */}
             <div
