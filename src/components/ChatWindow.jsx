@@ -136,12 +136,12 @@ const ChatWindow = () => {
     };
 
     return (
-        <div className="flex flex-col justify-between flex-1 sm:flex-none h-full sm:w-[95%] md:w-[80%] lg:w-[70%] sm:h-full sm:mt-[40px] sm:mx-auto sm:min-h-[500px] sm:h-[85vh] box-border sm:rounded-[20px] p-3 sm:p-4 md:p-6 shadow-2xl border border-gray-800" style={{ backgroundColor: 'var(--color-chat-bg)' }}>
+        <div className="flex flex-col flex-1 sm:flex-none h-full sm:w-[95%] md:w-[80%] lg:w-[70%] sm:h-full sm:mt-[40px] sm:mx-auto sm:min-h-[500px] sm:h-[85vh] box-border sm:rounded-[20px] shadow-2xl border border-gray-800" style={{ backgroundColor: 'var(--color-chat-bg)' }}>
 
             {/* Messages Area */}
             <div
                 ref={scrollRef}
-                className="flex-1 overflow-y-auto flex flex-col p-1 sm:p-2 gap-3 sm:gap-5 scroll-smooth scrollbar-hide"
+                className="flex-1 overflow-y-auto flex flex-col p-3 sm:p-4 md:p-6 gap-3 sm:gap-5 scroll-smooth scrollbar-hide"
             >
                 {messages.map((msg, index) => (
                     <div
@@ -181,7 +181,7 @@ const ChatWindow = () => {
             </div>
 
             {/* Input Area */}
-            <div className="flex items-center fixed gap-2 sm:gap-3 mt-3 sm:mt-4 px-3 sm:px-4 py-2 sm:py-3 border border-gray-700 rounded-xl sm:rounded-2xl focus-within:border-indigo-500 transition-all shadow-inner" style={{ backgroundColor: 'var(--color-input-bg)' }}>
+            <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3 border border-gray-700 rounded-xl sm:rounded-2xl focus-within:border-indigo-500 transition-all shadow-inner flex-shrink-0" style={{ backgroundColor: 'var(--color-input-bg)' }}>
                 <input
                     type="text"
                     placeholder="Ask SimpeChat anything..."
@@ -203,8 +203,6 @@ const ChatWindow = () => {
                     />
                 </button>
             </div>
-
-   
         </div>
     );
 };
