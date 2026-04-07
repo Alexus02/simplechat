@@ -30,7 +30,7 @@ const Sidebar = () => {
     return (
         <aside className={`
         ${isSidebarOpen ? 'w-[150px] sm:w-[280px] bg-[#141718]' : 'w-[50px] sm:w-[80px] bg-[#141718]'}
-         h-screen p-[12px] sm:p-[20px] gap-[12px] sm:gap-[20px] flex flex-col transition-all duration-300 ease-in-out shrink-0 border-r border-[#242627] overflow-hidden`}>
+         h-full min-h-0 p-[12px] sm:p-[20px] gap-[12px] sm:gap-[20px] flex flex-col transition-all duration-300 ease-in-out shrink-0 border-r border-[#242627] overflow-hidden`}>
             <div className='flex justify-between items-center h-[30px]'>
                 <div className="overflow-hidden">
                     <img src={simpleChatlogo} alt="simplechatlogo" className={`w-auto h-[24px] object-contain

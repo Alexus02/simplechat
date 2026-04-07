@@ -9,7 +9,6 @@ const ChatWindow = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isFirstMessage, setIsFirstMessage] = useState(true);
 
-    // Persist the Chat instance across re-renders
     const chatInstance = useRef(new Chat());
     const scrollRef = useRef(null);
 
@@ -22,7 +21,6 @@ const ChatWindow = () => {
         currentConversationId
     } = useContext(ConversationContext);
 
-    // Load conversation messages when current conversation changes
     useEffect(() => {
         const currentConv = getCurrentConversation();
         if (currentConv) {
@@ -39,7 +37,6 @@ const ChatWindow = () => {
         }
     }, [currentConversationId, getCurrentConversation]);
 
-    // Auto-scroll to bottom whenever messages or loading state changes
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -50,19 +47,16 @@ const ChatWindow = () => {
         const trimmedInput = inputValue.trim();
         if (!trimmedInput || isLoading) return;
 
-        // Create new conversation if none exists
         let convId = currentConversationId;
         if (!convId) {
             convId = createNewConversation("New Chat");
         }
 
-        // 1. Update local logic and UI immediately
         chatInstance.current.addUserMessage(trimmedInput);
         const userMessage = { tag: "user", text: trimmedInput };
         setMessages([...chatInstance.current.getMessages()]);
         addMessageToConversation(convId, userMessage);
 
-        // Update title with first message (truncate to 30 chars)
         if (isFirstMessage) {
             const title = trimmedInput.substring(0, 30) + (trimmedInput.length > 30 ? "..." : "");
             updateConversationTitle(convId, title);
@@ -73,7 +67,6 @@ const ChatWindow = () => {
         setIsLoading(true);
 
         try {
-            // 2. Prepare history for Groq (OpenAI-compatible format)
             const history = chatInstance.current.getMessages().map(msg => ({
                 role: msg.tag === "user" ? "user" : "assistant",
                 content: msg.text
@@ -84,8 +77,7 @@ const ChatWindow = () => {
                 ...history
             ];
 
-            // 3. Call Groq Cloud API
-            const apiKey = import.meta.env.VITE_GROK_API_KEY; // Ensure this is your Groq key
+            const apiKey = import.meta.env.VITE_GROK_API_KEY;
 
             const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                 method: "POST",
@@ -94,7 +86,7 @@ const ChatWindow = () => {
                     "Authorization": `Bearer ${apiKey}`
                 },
                 body: JSON.stringify({
-                    model: "llama-3.1-8b-instant", // Llama 3.1 8B model
+                    model: "llama-3.1-8b-instant",
                     messages: apiMessages,
                     temperature: 0.7,
                     max_tokens: 1024,
@@ -111,7 +103,6 @@ const ChatWindow = () => {
             const data = await response.json();
             const aiText = data.choices[0].message.content;
 
-            // 4. Update logic class with the AI response
             chatInstance.current.addApiMessage(aiText);
             const aiMessage = { tag: "api", text: aiText };
             addMessageToConversation(convId, aiMessage);
@@ -122,7 +113,6 @@ const ChatWindow = () => {
             chatInstance.current.addApiMessage(errorMsg);
             addMessageToConversation(convId, { tag: "api", text: errorMsg });
         } finally {
-            // 5. Final sync and stop loading
             setMessages([...chatInstance.current.getMessages()]);
             setIsLoading(false);
         }
@@ -136,10 +126,16 @@ const ChatWindow = () => {
     };
 
     return (
-        <div className="flex flex-col flex-1 min-h-0 min-w-0 w-full sm:w-[95%] md:w-[80%] lg:w-[70%] sm:mt-[40px] sm:mx-auto sm:rounded-[20px] shadow-2xl border border-gray-800 overflow-hidden" style={{ backgroundColor: 'var(--color-chat-bg)' }}>
-
-            {/* Messages Area */}
-           <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto flex flex-col p-3 sm:p-4 md:p-6 gap-3 sm:gap-5 scroll-smooth scrollbar-hide">
+       
+        <div
+            className="flex flex-col h-[95%] sm:h-[80%] w-[80%] min-h-0 min-w-0 max-w-full rounded-[20px] overflow-hidden border border-gray-800 shadow-2xl"
+            style={{ backgroundColor: 'var(--color-chat-bg)' }}
+        >
+            {/* Messages Area — flex-1 + min-h-0 makes it scrollable without overflowing */}
+            <div
+                ref={scrollRef}
+                className="flex-1 min-h-0 overflow-y-auto flex flex-col p-3 sm:p-4 md:p-6 gap-3 sm:gap-5"
+            >
                 {messages.map((msg, index) => (
                     <div
                         key={index}
@@ -177,12 +173,15 @@ const ChatWindow = () => {
                 )}
             </div>
 
-            {/* Input Area */}
-            <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3 border border-gray-700 rounded-xl sm:rounded-2xl focus-within:border-indigo-500 transition-all shadow-inner flex-shrink-0" style={{ backgroundColor: 'var(--color-input-bg)' }}>
+            {/* Input Area — flex-shrink-0 keeps it pinned at the bottom always */}
+            <div
+                className="flex items-center min-w-0 gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3 border border-gray-700 rounded-xl sm:rounded-2xl focus-within:border-indigo-500 transition-all shadow-inner flex-shrink-0"
+                style={{ backgroundColor: 'var(--color-input-bg)' }}
+            >
                 <input
                     type="text"
-                    placeholder="Ask SimpeChat anything..."
-                    className="flex-1 bg-transparent text-sm sm:text-base text-gray-100 outline-none placeholder-gray-600 font-normal"
+                    placeholder="Ask SimpleChat anything..."
+                    className="flex-1 min-w-0 bg-transparent text-sm sm:text-base text-gray-100 outline-none placeholder-gray-600 font-normal"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
