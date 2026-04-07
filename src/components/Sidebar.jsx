@@ -5,7 +5,7 @@ import addround from '../assets/Add_round_fill.svg'
 import { ConversationContext } from '../context/ConversationContext'
 
 const Sidebar = () => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const {
         conversations,
         currentConversationId,
@@ -29,26 +29,50 @@ const Sidebar = () => {
 
     return (
         <aside className={`
-        ${isSidebarOpen ? 'w-[150px] sm:w-[280px] bg-[#141718]' : 'w-[50px] sm:w-[80px] bg-[#141718]'}
-         h-full min-h-0 p-[12px] sm:p-[20px] gap-[12px] sm:gap-[20px] flex flex-col transition-all duration-300 ease-in-out shrink-0 border-r border-[#242627] overflow-hidden`}>
+            ${isSidebarOpen 
+                ? 'w-[150px] sm:w-[280px] bg-[#141718] border-[#242627]' 
+                : 'w-[56px] bg-transparent sm:bg-[#141718] border-transparent sm:border-[#242627]'} 
+            h-full min-h-0 p-[12px] sm:p-[20px] gap-[12px] sm:gap-[20px] flex flex-col 
+            transition-all duration-300 ease-in-out shrink-0 border-r overflow-hidden`}>
+            
             <div className='flex justify-between items-center h-[30px]'>
                 <div className="overflow-hidden">
-                    <img src={simpleChatlogo} alt="simplechatlogo" className={`w-auto h-[24px] object-contain
-                    ${isSidebarOpen ? 'block' : 'hidden'}`} />
+                    <img 
+                        src={simpleChatlogo} 
+                        alt="simplechatlogo" 
+                        className={`w-auto h-[24px] object-contain transition-opacity duration-200
+                        ${isSidebarOpen ? 'opacity-100 block' : 'opacity-0 hidden'}`} 
+                    />
                 </div>
-                <div onClick={() => setIsSidebarOpen(!isSidebarOpen)} className={`cursor-pointer
-                ${isSidebarOpen ? '' : 'bg-[#242627] rounded-[10px] p-[5px]'}`}><img src={toggler} alt="toggler" className='w-[24px] h-[24px] ' /></div>
+
+                {/* Toggler: Adjusted sizing and responsive background */}
+                <div 
+                    onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
+                    className={`cursor-pointer transition-all duration-300 flex items-center justify-center
+                    ${isSidebarOpen 
+                        ? 'bg-transparent w-auto h-auto' 
+                        : 'bg-[#242627] sm:bg-transparent rounded-[10px] w-[36px] h-[36px] sm:w-[40px] sm:h-[40px] hover:bg-[#343739] sm:hover:bg-[#242627]'}`}
+                >
+                    <img 
+                        src={toggler} 
+                        alt="toggler" 
+                        className='w-[24px] h-[24px] sm:w-[28px] sm:h-[28px] shrink-0' 
+                    />
+                </div>
             </div>
 
+            {/* New Chat Button */}
             <div
                 onClick={handleNewChat}
-                className={`flex items-center gap-[10px] cursor-pointer p-[8px] sm:p-[10px] rounded-xl border border-[#2a2a2a] hover:bg-[#242627] transition-colors text-sm sm:text-base
-            ${isSidebarOpen ? 'flex' : 'hidden'}`}>
-                <img src={addround} className={`w-[18px] sm:w-[20px] h-[18px] sm:h-[20px]`} alt="addround" /><span className='text-gray-300 text-xs sm:text-sm font-medium'>New Chat</span>
+                className={`items-center gap-[10px] cursor-pointer p-[8px] sm:p-[10px] rounded-xl border border-[#2a2a2a] hover:bg-[#242627] transition-colors text-sm sm:text-base
+                ${isSidebarOpen ? 'flex' : 'hidden'}`}>
+                <img src={addround} className="w-[18px] sm:w-[20px] h-[18px] sm:h-[20px]" alt="addround" />
+                <span className='text-gray-300 text-xs sm:text-sm font-medium'>New Chat</span>
             </div>
 
+            {/* Conversations List */}
             {isSidebarOpen && (
-                <div className="flex flex-col mt-2 gap-1 animate-in fade-in duration-300 flex-1 overflow-y-auto">
+                <div className="flex flex-col mt-2 gap-1 animate-in fade-in slide-in-from-left-2 duration-300 flex-1 overflow-y-auto">
                     <span className="text-xs font-bold text-gray-100 mb-2 px-1">Conversations</span>
                     
                     {conversations.length === 0 ? (
@@ -70,6 +94,7 @@ const Sidebar = () => {
                                     </span>
                                     <span className="text-gray-200 text-[12px] sm:text-[13px] truncate font-medium">{conv.title}</span>
                                 </div>
+                                
                                 {currentConversationId === conv.id && (
                                     <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
                                         <img

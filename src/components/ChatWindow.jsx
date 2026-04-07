@@ -128,7 +128,7 @@ const ChatWindow = () => {
     return (
        
         <div
-            className="flex flex-col h-[95%] sm:h-[80%] w-[80%] min-h-0 min-w-0 max-w-full rounded-[20px] overflow-hidden border border-gray-800 shadow-2xl"
+            className="flex flex-col h-[95%] sm:h-[80%] w-[95%] lg:w-[80%] min-h-0 min-w-0 max-w-full rounded-[20px] overflow-hidden border border-gray-800 shadow-2xl"
             style={{ backgroundColor: 'var(--color-chat-bg)' }}
         >
             {/* Messages Area — flex-1 + min-h-0 makes it scrollable without overflowing */}
